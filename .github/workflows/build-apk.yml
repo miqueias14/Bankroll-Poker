@@ -23,6 +23,12 @@ jobs:
         with:
           gradle-version: "8.7"
 
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar SDK necessario
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
       - name: Conferir arquivos do app
         run: |
           test -f android/app/src/main/assets/index.html
@@ -31,10 +37,11 @@ jobs:
 
       - name: Gerar APK debug
         working-directory: android
-        run: gradle :app:assembleDebug
+        run: gradle :app:assembleDebug --stacktrace
 
       - name: Enviar APK para download
         uses: actions/upload-artifact@v4
         with:
           name: Bankroll-Poker-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          
