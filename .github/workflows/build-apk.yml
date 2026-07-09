@@ -23,10 +23,11 @@ jobs:
         with:
           gradle-version: "8.7"
 
-      - name: Copiar site para o app Android
+      - name: Conferir arquivos do app
         run: |
-          mkdir -p android/app/src/main/assets
-          cp index.html style.css script.js manifest.json sw.js icon.svg android/app/src/main/assets/
+          test -f android/app/src/main/assets/index.html
+          test -f android/app/src/main/assets/style.css
+          test -f android/app/src/main/assets/script.js
 
       - name: Gerar APK debug
         working-directory: android
